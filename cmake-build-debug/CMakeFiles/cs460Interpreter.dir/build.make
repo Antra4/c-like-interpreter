@@ -82,30 +82,30 @@ CMakeFiles/cs460Interpreter.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cs460Interpreter.dir/main.cpp.s"
 	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Anthony\CLionProjects\c-like-interpreter\main.cpp -o CMakeFiles\cs460Interpreter.dir\main.cpp.s
 
-CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj: CMakeFiles/cs460Interpreter.dir/flags.make
-CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj: C:/Users/Anthony/CLionProjects/c-like-interpreter/tokenize.cpp
-CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj: CMakeFiles/cs460Interpreter.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Anthony\CLionProjects\c-like-interpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj -MF CMakeFiles\cs460Interpreter.dir\tokenize.cpp.obj.d -o CMakeFiles\cs460Interpreter.dir\tokenize.cpp.obj -c C:\Users\Anthony\CLionProjects\c-like-interpreter\tokenize.cpp
+CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj: CMakeFiles/cs460Interpreter.dir/flags.make
+CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj: C:/Users/Anthony/CLionProjects/c-like-interpreter/tokenizer.cpp
+CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj: CMakeFiles/cs460Interpreter.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\Anthony\CLionProjects\c-like-interpreter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj -MF CMakeFiles\cs460Interpreter.dir\tokenizer.cpp.obj.d -o CMakeFiles\cs460Interpreter.dir\tokenizer.cpp.obj -c C:\Users\Anthony\CLionProjects\c-like-interpreter\tokenizer.cpp
 
-CMakeFiles/cs460Interpreter.dir/tokenize.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cs460Interpreter.dir/tokenize.cpp.i"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Anthony\CLionProjects\c-like-interpreter\tokenize.cpp > CMakeFiles\cs460Interpreter.dir\tokenize.cpp.i
+CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.i"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Anthony\CLionProjects\c-like-interpreter\tokenizer.cpp > CMakeFiles\cs460Interpreter.dir\tokenizer.cpp.i
 
-CMakeFiles/cs460Interpreter.dir/tokenize.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cs460Interpreter.dir/tokenize.cpp.s"
-	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Anthony\CLionProjects\c-like-interpreter\tokenize.cpp -o CMakeFiles\cs460Interpreter.dir\tokenize.cpp.s
+CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.s"
+	C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Anthony\CLionProjects\c-like-interpreter\tokenizer.cpp -o CMakeFiles\cs460Interpreter.dir\tokenizer.cpp.s
 
 # Object files for target cs460Interpreter
 cs460Interpreter_OBJECTS = \
 "CMakeFiles/cs460Interpreter.dir/main.cpp.obj" \
-"CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj"
+"CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj"
 
 # External object files for target cs460Interpreter
 cs460Interpreter_EXTERNAL_OBJECTS =
 
 cs460Interpreter.exe: CMakeFiles/cs460Interpreter.dir/main.cpp.obj
-cs460Interpreter.exe: CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj
+cs460Interpreter.exe: CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj
 cs460Interpreter.exe: CMakeFiles/cs460Interpreter.dir/build.make
 cs460Interpreter.exe: CMakeFiles/cs460Interpreter.dir/linkLibs.rsp
 cs460Interpreter.exe: CMakeFiles/cs460Interpreter.dir/objects1.rsp

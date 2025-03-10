@@ -152,29 +152,29 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-tokenize.obj: tokenize.cpp.obj
-.PHONY : tokenize.obj
+tokenizer.obj: tokenizer.cpp.obj
+.PHONY : tokenizer.obj
 
 # target to build an object file
-tokenize.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj
-.PHONY : tokenize.cpp.obj
+tokenizer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj
+.PHONY : tokenizer.cpp.obj
 
-tokenize.i: tokenize.cpp.i
-.PHONY : tokenize.i
+tokenizer.i: tokenizer.cpp.i
+.PHONY : tokenizer.i
 
 # target to preprocess a source file
-tokenize.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/tokenize.cpp.i
-.PHONY : tokenize.cpp.i
+tokenizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.i
+.PHONY : tokenizer.cpp.i
 
-tokenize.s: tokenize.cpp.s
-.PHONY : tokenize.s
+tokenizer.s: tokenizer.cpp.s
+.PHONY : tokenizer.s
 
 # target to generate assembly for a file
-tokenize.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/tokenize.cpp.s
-.PHONY : tokenize.cpp.s
+tokenizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.s
+.PHONY : tokenizer.cpp.s
 
 # Help Target
 help:
@@ -188,9 +188,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... tokenize.obj
-	@echo ... tokenize.i
-	@echo ... tokenize.s
+	@echo ... tokenizer.obj
+	@echo ... tokenizer.i
+	@echo ... tokenizer.s
 .PHONY : help
 
 

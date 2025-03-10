@@ -2,10 +2,13 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include "tokenizer.h"
+
 //First step: Get the file as input, output it as a file
-void removeComments(std::ifstream &file) {
-    std::string outFileName = "output.txt";
-    std::ofstream writeFile(outFileName);
+std::fstream removeComments(std::ifstream &file) {
+    std::string outFileName = "comments_removed.txt";
+    std::fstream writeFile;
+    writeFile.open(outFileName, std::ios::out);
 
     // Check if output file opened successfully
     if (!writeFile.is_open()) {
@@ -18,7 +21,7 @@ void removeComments(std::ifstream &file) {
     bool inBlockComment = false;
     bool inString = false;
     int lineCount = 0;
-    int blockLine = NULL;
+    int blockLine = 0;
 
     //Processing Stream
     while (std::getline(file, line)) {
@@ -91,22 +94,15 @@ void removeComments(std::ifstream &file) {
     }
 
     writeFile.close();
+
+    return writeFile;
 }
 
-void tokenize(std::ifstream &file) {
+void printFile(std::fstream &file, std::string fileName) {
+    file.open(fileName, std::ios::in);
     std::string line;
-    std::string word;
-
     while (std::getline(file, line)) {
-        std::istringstream iss(line);
         std::cout << line << std::endl;
-
-
-        while(iss) {
-            iss >> word;
-            std::cout << word << std::endl;
-        }
-
     }
 }
 
@@ -125,9 +121,13 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    removeComments(inFile);
-    tokenize(inFile);
+    std::fstream noCommentsCode = removeComments(inFile);
 
+    //printFile(noCommentsCode, fileName);
+    //set up tokenizer object to have a file as a member variable then call the tokenizer on that
+    tokenizer noComments(noCommentsCode);
+
+    //noComments.printFile();
     inFile.close();
     return 0;
 }

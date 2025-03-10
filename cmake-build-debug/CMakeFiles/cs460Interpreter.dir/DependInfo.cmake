@@ -9,7 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/Anthony/CLionProjects/c-like-interpreter/main.cpp" "CMakeFiles/cs460Interpreter.dir/main.cpp.obj" "gcc" "CMakeFiles/cs460Interpreter.dir/main.cpp.obj.d"
-  "C:/Users/Anthony/CLionProjects/c-like-interpreter/tokenize.cpp" "CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj" "gcc" "CMakeFiles/cs460Interpreter.dir/tokenize.cpp.obj.d"
+  "C:/Users/Anthony/CLionProjects/c-like-interpreter/tokenizer.cpp" "CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj" "gcc" "CMakeFiles/cs460Interpreter.dir/tokenizer.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.
