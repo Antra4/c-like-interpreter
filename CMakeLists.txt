@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 17)
 add_executable(cs460Interpreter main.cpp
         tokenizer.cpp
         tokenizer.h
-)
+        token.cpp token.h)

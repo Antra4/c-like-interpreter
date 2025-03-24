@@ -6,6 +6,7 @@
 #define TOKENIZE_H
 
 #include <fstream>
+#include <array>
 
 
 
@@ -19,113 +20,6 @@ public:
     void printFile();
     void processWord(std::string &prevWord, std::string &word, std::string &nextWord);
 
-    struct Token {
-        std::string token;
-        enum class TokenType {
-            // Character Sets
-            CHARACTER,              // Basic character set
-            ESCAPED_CHARACTER,      // Escaped characters like \n, \t, etc.
-            LETTER,                 // Alphabetic characters A-Z, a-z
-            DIGIT,                  // Numeric digits 0-9
-            HEX_DIGIT,              // Hexadecimal digits 0-9, A-F, a-f
-
-            // Delimiters
-            L_PAREN,                // (
-            R_PAREN,                // )
-            L_BRACKET,              // [
-            R_BRACKET,              // ]
-            L_BRACE,                // {
-            R_BRACE,                // }
-            DOUBLE_QUOTE,           // "
-            SINGLE_QUOTE,           // '
-            SEMICOLON,              // ;
-            COMMA,                  // ,
-
-            // Operators
-            ASSIGNMENT_OPERATOR,    // =
-            PLUS,                   // +
-            MINUS,                  // -
-            ASTERISK,               // *
-            DIVIDE,                 // /
-            MODULO,                 // %
-            CARET,                  // ^
-            LT,                     // <
-            GT,                     // >
-            LT_EQUAL,               // <=
-            GT_EQUAL,               // >=
-
-            // Boolean operators
-            BOOLEAN_AND,            // &&
-            BOOLEAN_OR,             // ||
-            BOOLEAN_NOT,            // !
-            BOOLEAN_EQUAL,          // ==
-            BOOLEAN_NOT_EQUAL,      // !=
-            BOOLEAN_TRUE,           // TRUE
-            BOOLEAN_FALSE,          // FALSE
-
-            // Compound tokens
-            STRING,                 // Sequence of characters
-            DOUBLE_QUOTED_STRING,   // String in double quotes
-            SINGLE_QUOTED_STRING,   // String in single quotes
-            LETTER_UNDERSCORE,      // Letter or underscore
-            LETTER_DIGIT_UNDERSCORE, // Letter, digit, or underscore
-            WHOLE_NUMBER,           // Sequence of digits
-            INTEGER,                // Whole number with optional sign
-            IDENTIFIER_TAIL,        // Tail part of an identifier
-            IDENTIFIER,             // Complete identifier
-
-            // Lists
-            IDENTIFIER_LIST,        // List of identifiers
-            IDENTIFIER_ARRAY_LIST,  // List of array identifiers
-            IDENTIFIER_AND_IDENTIFIER_ARRAY_LIST, // Combined list
-
-            // Language keywords and types
-            DATATYPE_SPECIFIER,     // char, bool, int
-
-            // Expressions
-            NUMERICAL_OPERAND,      // Operand in numerical expression
-            NUMERICAL_OPERATOR,     // Operator in numerical expression
-            BOOLEAN_OPERATOR,       // Boolean operator
-            EQUALITY_EXPRESSION,    // == or !=
-            RELATIONAL_EXPRESSION,  // <, <=, >, >=, ==, !=
-            NUMERICAL_EXPRESSION,   // Expression with numerical result
-            BOOLEAN_EXPRESSION,     // Expression with boolean result
-            INITIALIZATION_EXPRESSION, // Assignment in initialization
-            EXPRESSION,             // Generic expression
-
-            // Statements
-            SELECTION_STATEMENT,    // if-then-else statement
-            ITERATION_STATEMENT,    // for or while loop
-            ASSIGNMENT_STATEMENT,   // Assignment with semicolon
-            PRINTF_STATEMENT,       // printf function call
-            GETCHAR_FUNCTION,       // getchar function call
-            USER_DEFINED_FUNCTION,  // Custom function call
-            DECLARATION_STATEMENT,  // Variable declaration
-            RETURN_STATEMENT,       // Return statement
-            STATEMENT,              // Generic statement
-            COMPOUND_STATEMENT,     // Multiple statements
-            BLOCK_STATEMENT,        // Block in braces
-
-            // Function-related
-            PARAMETER_LIST,         // Function parameters
-            FUNCTION_DECLARATION,   // Function definition
-            PROCEDURE_DECLARATION,  // Procedure definition
-            MAIN_PROCEDURE,         // Main procedure
-
-            // Program structure
-            PROGRAM,                // Complete program
-
-            // BNF-specific tokens (not in the language but in the meta-notation)
-            DEFINITION,             // ::=
-            ALTERNATION,            // |
-
-            // Special tokens
-            END_OF_FILE,            // End of input
-            UNKNOWN                 // Unrecognized token
-        };
-
-        Token createToken(std::string word, TokenType type);
-    };
 
 private:
     std::fstream* parseFile;

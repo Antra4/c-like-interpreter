@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include "tokenizer.h"
+#include "token.h"
 
 //First step: Get the file as input, output it as a file
 std::fstream removeComments(std::ifstream &file) {
@@ -130,7 +131,11 @@ int main(int argc, char* argv[]) {
 
     tokenizer noComments(noCommentsCode);
 
-    noComments.tokenize();
+    token TestToken = {"(", token::L_PAREN};
+
+    TestToken.printToken();
+
+    //noComments.tokenize();
     inFile.close();
     return 0;
 }
