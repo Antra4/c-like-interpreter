@@ -14,6 +14,7 @@ std::fstream removeComments(std::ifstream &file) {
     if (!writeFile.is_open()) {
         std::cerr << "Error: Could not open output file '" << outFileName << "'" << std::endl;
         file.close();
+        exit(1);
     }
 
     std::string line;
@@ -91,6 +92,7 @@ std::fstream removeComments(std::ifstream &file) {
 
     if(inLineComment || inBlockComment) {
         std::cerr << "ERROR: Program contains C-style, unterminated comment on line " << blockLine << std::endl;
+        exit(1);
     }
 
     writeFile.close();
@@ -125,9 +127,10 @@ int main(int argc, char* argv[]) {
 
     //printFile(noCommentsCode, fileName);
     //set up tokenizer object to have a file as a member variable then call the tokenizer on that
+
     tokenizer noComments(noCommentsCode);
 
-    //noComments.printFile();
+    noComments.tokenize();
     inFile.close();
     return 0;
 }
