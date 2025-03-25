@@ -152,6 +152,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+token.obj: token.cpp.obj
+.PHONY : token.obj
+
+# target to build an object file
+token.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/token.cpp.obj
+.PHONY : token.cpp.obj
+
+token.i: token.cpp.i
+.PHONY : token.i
+
+# target to preprocess a source file
+token.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/token.cpp.i
+.PHONY : token.cpp.i
+
+token.s: token.cpp.s
+.PHONY : token.s
+
+# target to generate assembly for a file
+token.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\cs460Interpreter.dir\build.make CMakeFiles/cs460Interpreter.dir/token.cpp.s
+.PHONY : token.cpp.s
+
 tokenizer.obj: tokenizer.cpp.obj
 .PHONY : tokenizer.obj
 
@@ -188,6 +212,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... token.obj
+	@echo ... token.i
+	@echo ... token.s
 	@echo ... tokenizer.obj
 	@echo ... tokenizer.i
 	@echo ... tokenizer.s

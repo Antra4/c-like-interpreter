@@ -231,6 +231,8 @@ public:
 
 
     void printToken();
+    std::string getToken() { return tokenStr; }
+    tokenType getTokenType() { return tType; }
 
 
 

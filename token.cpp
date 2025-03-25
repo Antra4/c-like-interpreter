@@ -7,7 +7,7 @@
 #include <iomanip>
 
 void token::printToken() {
-    std::cout << "TOKEN TYPE: " << tokenTypes.at(this->tType) << std::endl;
-    std::cout << "Token: " << std::right << std::setw(6) << this->tokenStr << std::endl;
+    std::cout << "\nToken Type: " << tokenTypes.at(this->tType) << std::endl;
+    std::cout << "Token:      " << this->tokenStr << std::endl;
 
 }
