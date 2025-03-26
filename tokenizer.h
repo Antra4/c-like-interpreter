@@ -40,7 +40,13 @@ private:
         ";",
         "=",
         "printf",
-        ","
+        ",",
+        "if",
+        "*",
+        "+",
+        "%",
+        "else",
+        "while"
 
     };
 
@@ -54,13 +60,20 @@ private:
         {"(", token::L_PAREN},
         {")", token::R_PAREN},
         {"void", token::IDENTIFIER},
-        {"\"", token::DOUBLE_QUOTE}
-
-
-
-
+        {"\"", token::DOUBLE_QUOTE},
+        {",", token::COMMA},
+        {";", token::SEMICOLON},
+        {"if", token::IDENTIFIER},
+        {"%", token::MODULO},
+        {"*", token::ASTERISK},
+        {"+", token::PLUS},
+        {"else", token::IDENTIFIER},
+        {"while", token::IDENTIFIER}
 
     };
+
+    std::map<std::string, std::string> variableTokens {};
+
 
 };
 
