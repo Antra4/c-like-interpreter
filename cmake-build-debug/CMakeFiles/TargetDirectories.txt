@@ -1,3 +1,0 @@
-C:/Users/Anthony/CLionProjects/c-like-interpreter/cmake-build-debug/CMakeFiles/cs460Interpreter.dir
-C:/Users/Anthony/CLionProjects/c-like-interpreter/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Anthony/CLionProjects/c-like-interpreter/cmake-build-debug/CMakeFiles/rebuild_cache.dir
