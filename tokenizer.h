@@ -22,6 +22,7 @@ public:
     void processWord(std::string &prevWord, std::string &word, std::string &nextWord);
     void testPopulateTokens();
     void printTokens();
+    bool isNumber(const std::string& str);
 
 
 
@@ -46,7 +47,9 @@ private:
         "+",
         "%",
         "else",
-        "while"
+        "while",
+        "==",
+        "<="
 
     };
 
@@ -68,7 +71,9 @@ private:
         {"*", token::ASTERISK},
         {"+", token::PLUS},
         {"else", token::IDENTIFIER},
-        {"while", token::IDENTIFIER}
+        {"while", token::IDENTIFIER},
+        {"==", token::BOOLEAN_EQUAL},
+        {"<=", token::LT_EQUAL}
 
     };
 
