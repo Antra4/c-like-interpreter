@@ -23,6 +23,9 @@ public:
     void testPopulateTokens();
     void printTokens();
     bool isNumber(const std::string& str);
+    std::string removeArrSize(std::string &word);
+    void processChar(std::string inStr, token &prevToken, token &prev2Token);
+
 
 
 
@@ -49,7 +52,19 @@ private:
         "else",
         "while",
         "==",
-        "<="
+        "<=",
+        "function",
+        "char",
+        ">=",
+        "&&",
+        "-",
+        "return",
+        "for",
+        "<",
+        ">",
+        "[",
+        "]",
+        "'"
 
     };
 
@@ -73,7 +88,19 @@ private:
         {"else", token::IDENTIFIER},
         {"while", token::IDENTIFIER},
         {"==", token::BOOLEAN_EQUAL},
-        {"<=", token::LT_EQUAL}
+        {"<=", token::LT_EQUAL},
+        {"function", token::IDENTIFIER},
+        {">=", token::GT_EQUAL},
+        {"&&", token::BOOLEAN_AND},
+        {"-", token::MINUS},
+        {"return", token::IDENTIFIER},
+        {"for", token::IDENTIFIER},
+        {"<", token::LT},
+        {">", token::GT},
+        {"[", token::L_BRACKET},
+        {"]", token::R_BRACKET},
+        {"'", token::SINGLE_QUOTE},
+        {"char", token::IDENTIFIER}
 
     };
 
