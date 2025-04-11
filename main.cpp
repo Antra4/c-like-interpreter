@@ -131,11 +131,9 @@ int main(int argc, char* argv[]) {
 
     tokenizer noComments(noCommentsCode);
 
-    //token TestToken = {"(", token::L_PAREN};
-    //TestToken.printToken();
 
-    noComments.tokenize();
     //noComments.testPopulateTokens();
+    noComments.tokener();
     noComments.printTokens();
     inFile.close();
     return 0;

@@ -16,7 +16,6 @@ class tokenizer {
 public:
     tokenizer(std::fstream &inFile);
 
-    void tokenize();
     void updateFile(std::fstream &file);
     void printFile();
     void processWord(std::string &prevWord, std::string &word, std::string &nextWord);
@@ -25,6 +24,11 @@ public:
     bool isNumber(const std::string& str);
     std::string removeArrSize(std::string &word);
     void processChar(std::string inStr, token &prevToken, token &prev2Token);
+    bool tokener();
+//    bool tester();
+    void processString(std::istringstream &iss, token &prevToken);
+    bool checkNum(std::istringstream &iss, token &prevToken, char c);
+    bool checkChar(std::istringstream &iss, token &prevToken, char c);
 
 
 
@@ -64,7 +68,13 @@ private:
         ">",
         "[",
         "]",
-        "'"
+        "'",
+        "bool",
+        "read",
+        "sizeof",
+        "/",
+        "TRUE",
+        "FALSE"
 
     };
 
@@ -100,8 +110,13 @@ private:
         {"[", token::L_BRACKET},
         {"]", token::R_BRACKET},
         {"'", token::SINGLE_QUOTE},
-        {"char", token::IDENTIFIER}
-
+        {"char", token::IDENTIFIER},
+        {"bool", token::IDENTIFIER},
+        {"read", token::IDENTIFIER},
+        {"sizeof", token::IDENTIFIER},
+        {"/", token::DIVIDE},
+        {"TRUE", token::IDENTIFIER},
+        {"FALSE", token::IDENTIFIER}
     };
 
     std::map<std::string, std::string> variableTokens {};

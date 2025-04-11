@@ -96,515 +96,13 @@ void tokenizer::processChar(std::string inStr, token &prevToken, token &prev2Tok
     }
 }
 
-
-void tokenizer::tokenize() {
-    std::string line;
-    std::string word;
-    token prevToken;
-    token prev2Token;
-    int lineNum = 0;
-    bool inString = false;
-    bool openQuote = false;
-
-    parseFile->open("comments_removed.txt", std::ios::in);
-    if (parseFile->is_open()) {
-        std::string line;
-        while (std::getline(*parseFile, line)) {
-            std::istringstream iss(line);
-            lineNum++;
-
-            while(iss) {
-                if (prevToken.getToken() == "\"" && openQuote) {
-                    inString = true;
-                }
-                if (inString) {
-                    //read all characters into a string token until we hit a double quote
-                    std::string stringTok;
-                    std::stringstream ss(line);
-
-                    getline(ss, stringTok, '"');
-                    getline(ss, stringTok, '"');
-                    getline(ss, line);
-
-                    iss.clear();
-                    iss.str(line);
-
-                    //std::cout << line << std::endl;
-                    //std::cout << stringTok << std::endl;
-
-                    token newToken{stringTok, token::STRING};
-                    tokens.push_back(newToken);
-                    prev2Token = newToken;
-
-                    token newToken2{"\"", token::DOUBLE_QUOTE};
-                    tokens.push_back(newToken2);
-                    prevToken = newToken2;
-
-                    inString = false;
-                    openQuote = false;
-                }
-
-                if (iss >> word) {
-//                    if (prevToken.getToken() == "\"" && openQuote) {
-//                        inString = true;
-//                    }
-//                    if (inString) {
-//                        //read all characters into a string token until we hit a double quote
-//                        std::string stringTok;
-//                        std::stringstream ss(line);
-//
-//                        getline(ss, stringTok, '"');
-//                        getline(ss, stringTok, '"');
-//                        getline(ss, line);
-//
-//                        iss.str(line);
-//
-//                        //std::cout << line << std::endl;
-//                        //std::cout << stringTok << std::endl;
-//
-//                        token newToken{stringTok, token::STRING};
-//                        tokens.push_back(newToken);
-//                        prev2Token = newToken;
-//
-//                        token newToken2{"\"", token::DOUBLE_QUOTE};
-//                        tokens.push_back(newToken2);
-//                        prevToken = newToken2;
-//
-//                        inString = false;
-//                        openQuote = false;
-//                    }
-
-//                    else {
-                        if (std::find(reservedWords.begin(), reservedWords.end(), word) != reservedWords.end()) {
-                            token newToken{word, typeMap[word]};
-                            tokens.push_back(newToken);
-                            prev2Token = prevToken;
-                            prevToken = newToken;
-                        }
-
-                        //Assignment logic
-                        else if (prevToken.getToken() == "=") {
-                            std::string asType;
-                            char endChar = word.back();
-                            auto test = variableTokens.find(prev2Token.getToken());
-                            if (test != variableTokens.end()) {
-                                asType = test->second;
-                            }
-                            //Check if the word is an integer or a variable
-                            if (asType == "int") {
-                                if (endChar == ';') {
-                                    word.pop_back();
-
-                                    bool addParen = false;
-
-                                    if(word.back() == ')') {
-                                        word.pop_back();
-                                        addParen = true;
-                                    }
-                                    if (isNumber(word)) {
-                                        token newToken{word, token::INTEGER};
-                                        tokens.push_back(newToken);
-                                        prev2Token = newToken;
-                                    }
-                                    else {
-                                        token newToken{word, token::IDENTIFIER};
-                                        tokens.push_back(newToken);
-                                        prev2Token = newToken;
-                                    }
-
-                                    if (addParen) {
-                                        token newToken{")", token::R_PAREN};
-                                        tokens.push_back(newToken);
-                                        prev2Token = newToken;
-                                    }
-
-                                    token newToken2{";", token::SEMICOLON};
-                                    tokens.push_back(newToken2);
-                                    prevToken = newToken2;
-                                }
-
-
-                                else if (endChar == ')') {
-                                    word.pop_back();
-                                    if (isNumber(word)) {
-                                        token newToken{word, token::INTEGER};
-                                        tokens.push_back(newToken);
-                                        prev2Token = newToken;
-                                    }
-                                    else {
-                                        token newToken{word, token::IDENTIFIER};
-                                        tokens.push_back(newToken);
-                                        prev2Token = newToken;
-                                    }
-
-                                    token newToken2{")", token::R_PAREN};
-                                    tokens.push_back(newToken2);
-                                    prevToken = newToken2;
-                                }
-
-                                else {
-                                    if (isNumber(word)) {
-                                        token newToken{word, token::INTEGER};
-                                        tokens.push_back(newToken);
-                                        prev2Token = prevToken;
-                                        prevToken = newToken;                                    }
-                                    else {
-                                        token newToken{word, token::IDENTIFIER};
-                                        tokens.push_back(newToken);
-                                        prev2Token = prevToken;
-                                        prevToken = newToken;                                    }
-                                }
-                            }
-
-                            else if (asType == "char") {
-                                char dQuote = word[0];
-                                if (dQuote != '"') {
-                                    std::cerr << "error assigning string" << word << std::endl;
-                                }
-                                token newToken{"\"", token::DOUBLE_QUOTE};
-                                tokens.push_back(newToken);
-                                word.erase(0, 1);
-
-                                prev2Token = prevToken;
-                                prevToken = newToken;
-                                openQuote = true;
-                                continue;
-                            }
-
-                            else {
-                                std::cerr << "error with assignment " << word << std::endl;
-                            }
-                        }
-
-                        //Modulo Operator Logic
-                        else if (prevToken.getToken() == "%" || prevToken.getToken() == "==" || prevToken.getToken() == "<=" || prevToken.getToken() == ">=" || prevToken.getToken() == ">" || prevToken.getToken() == "<")  {
-                            char endChar = word.back();
-                            if (endChar == ';') {
-                                word.pop_back();
-
-                                if(word[0] == '\'') {
-                                    processChar(word, prevToken, prev2Token);
-                                    prev2Token = prevToken;
-                                    token newToken2{";", token::SEMICOLON};
-                                    tokens.push_back(newToken2);
-                                    prevToken = newToken2;
-                                }
-
-                                else {
-                                    token newToken{word, token::INTEGER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = newToken;
-                                    token newToken2{";", token::SEMICOLON};
-                                    tokens.push_back(newToken2);
-                                    prevToken = newToken2;
-                                }
-                            }
-
-                            else if (endChar == ')') {
-                                word.pop_back();
-                                bool doubleParen = false;
-
-                                if(word.back() == ')') {
-                                    word.pop_back();
-                                    doubleParen = true;
-                                }
-
-                                if(word[0] == '\'') {
-                                    processChar(word, prevToken, prev2Token);
-                                    prev2Token = prevToken;
-                                    token newToken2{")", token::R_PAREN};
-                                    tokens.push_back(newToken2);
-                                    prevToken = newToken2;
-                                }
-
-                                else {
-                                    token newToken{word, token::INTEGER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = newToken;
-                                    token newToken2{")", token::R_PAREN};
-                                    tokens.push_back(newToken2);
-                                    prevToken = newToken2;
-                                }
-
-                                if (doubleParen) {
-                                    token newToken3{")", token::R_PAREN};
-                                    tokens.push_back(newToken3);
-                                    prev2Token = newToken3;
-                                }
-
-                            }
-
-                            else {
-                                if(word[0] == '\'') {
-                                    processChar(word, prevToken, prev2Token);
-                                }
-
-                                else {
-                                    token newToken{word, token::INTEGER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = prevToken;
-                                    prevToken = newToken;
-                                }
-                            }
-                        }
-
-                        //Variable Logic
-                        else if (variableTokens.find(word) != variableTokens.end()) {
-                            token newToken{word, token::IDENTIFIER};
-                            tokens.push_back(newToken);
-                            prev2Token = prevToken;
-                            prevToken = newToken;
-                        }
-
-                        else if (prevToken.getToken() == "procedure" || prevToken.getToken() == "function") {
-                            token newToken{word, token::IDENTIFIER};
-                            tokens.push_back(newToken);
-                            variableTokens.emplace(word, "func");
-                            prev2Token = prevToken;
-                            prevToken = newToken;
-                        }
-
-                        else if (prevToken.getToken() == "int") {
-                            char lastChar = word.back();
-                            if (lastChar == ';' || lastChar == ')' || lastChar == ',') {
-                                word.pop_back();
-                            }
-                            token newToken{word, token::IDENTIFIER};
-                            variableTokens.emplace(word, "int");
-                            tokens.push_back(newToken);
-                            prev2Token = prevToken;
-                            prevToken = newToken;
-
-                            if (lastChar == ';') {
-                                token newToken2{";", token::SEMICOLON};
-                                tokens.push_back(newToken2);
-                                prev2Token = prevToken;
-                                prevToken = newToken2;
-                            }
-
-                            if (lastChar == ')') {
-                                token newToken2{")", token::R_PAREN};
-                                tokens.push_back(newToken2);
-                                prev2Token = prevToken;
-                                prevToken = newToken2;
-                            }
-
-                            if (lastChar == ',') {
-                                token newToken2{",", token::COMMA};
-                                tokens.push_back(newToken2);
-                                prev2Token = prevToken;
-                                prevToken = newToken2;
-                            }
-                        }
-
-                        else if (prevToken.getToken() == "char") {
-                            char lastChar = word.back();
-                            if (lastChar == ';' || lastChar == ')') {
-                                word.pop_back();
-                            }
-                            char penultimateChar = word.back();
-                            if (penultimateChar == ']') {
-                                std::string num = removeArrSize(word);
-                                token newToken{word, token::IDENTIFIER};
-                                variableTokens.emplace(word, "char");
-                                tokens.push_back(newToken);
-
-                                token newToken2{"[", token::L_BRACKET};
-                                tokens.push_back(newToken2);
-
-                                token newToken3{num, token::INTEGER};
-                                tokens.push_back(newToken3);
-                                prev2Token = newToken3;
-
-                                token newToken4{"]", token::R_BRACKET};
-                                tokens.push_back(newToken4);
-                                prevToken = newToken4;
-                            }
-
-                            token newToken{word, token::IDENTIFIER};
-                            variableTokens.emplace(word, "char");
-                            tokens.push_back(newToken);
-                            prev2Token = prevToken;
-                            prevToken = newToken;
-
-                            if (lastChar == ';') {
-                                token newToken2{";", token::SEMICOLON};
-                                tokens.push_back(newToken2);
-                                prev2Token = prevToken;
-                                prevToken = newToken2;
-                            }
-
-                            if (lastChar == ')') {
-                                token newToken2{")", token::R_PAREN};
-                                tokens.push_back(newToken2);
-                                prev2Token = prevToken;
-                                prevToken = newToken2;
-                            }
-                        }
-
-                        //Listed Declarations
-                        else if (prevToken.getToken() == "," && variableTokens.find(prev2Token.getToken()) != variableTokens.end()) {
-                            char lastChar = word.back();
-                            if (lastChar == ';' || lastChar == ')' || lastChar == ',') {
-                                word.pop_back();
-                            }
-                            token newToken{word, prev2Token.getTokenType()};
-
-                            std::string asType;
-                            auto test = variableTokens.find(prev2Token.getToken());
-                            if (test != variableTokens.end()) {
-                                asType = test->second;
-                            }
-
-                            variableTokens.emplace(word, asType);
-                            tokens.push_back(newToken);
-                            prev2Token = prevToken;
-                            prevToken = newToken;
-
-                            if (lastChar == ';') {
-                                token newToken2{";", token::SEMICOLON};
-                                tokens.push_back(newToken2);
-                                prev2Token = prevToken;
-                                prevToken = newToken2;
-                            }
-
-                            if (lastChar == ')') {
-                                token newToken2{")", token::R_PAREN};
-                                tokens.push_back(newToken2);
-                                prev2Token = prevToken;
-                                prevToken = newToken2;
-                            }
-
-                            if (lastChar == ',') {
-                                token newToken2{",", token::COMMA};
-                                tokens.push_back(newToken2);
-                                prev2Token = prevToken;
-                                prevToken = newToken2;
-                            }
-                        }
-
-                        //problem with '0'
-                        else if (prevToken.getToken() == "*" || prevToken.getToken() == "+" || prevToken.getToken() == "-") {
-                            char endChar = word.back();
-                            if (endChar == ';') {
-                                word.pop_back();
-                                if (isNumber(word)) {
-                                    token newToken{word, token::INTEGER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = newToken;
-                                }
-
-                                else if(word[0] == '\'') {
-                                    processChar(word, prevToken, prev2Token);
-                                }
-
-                                else {
-                                    token newToken{word, token::IDENTIFIER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = newToken;
-                                }
-
-
-                                token newToken2{";", token::SEMICOLON};
-                                tokens.push_back(newToken2);
-                                prevToken = newToken2;
-                            }
-
-                            else if (endChar == ')') {
-                                word.pop_back();
-                                if (isNumber(word)) {
-                                    token newToken{word, token::INTEGER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = newToken;
-                                }
-
-                                else if(word[0] == '\'') {
-                                    processChar(word, prevToken, prev2Token);
-                                }
-
-                                else {
-                                    token newToken{word, token::IDENTIFIER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = newToken;
-                                }
-
-                                token newToken2{")", token::R_PAREN};
-                                tokens.push_back(newToken2);
-                                prevToken = newToken2;
-                            }
-
-                            else {
-                                if (isNumber(word)) {
-                                    token newToken{word, token::INTEGER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = prevToken;
-                                    prevToken = newToken;
-                                }
-
-                                else if(word[0] == '\'') {
-                                    processChar(word, prevToken, prev2Token);
-                                }
-
-                                else {
-                                    token newToken{word, token::IDENTIFIER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = prevToken;
-                                    prevToken = newToken;                                    }
-                            }
-                        }
-
-                        //Look for tokens not separated by whitespace
-                        else {
-                            std::string parseWord;
-                            for (int i =0; i < word.size(); i++) {
-                                parseWord += word[i];
-                                if (std::find(reservedWords.begin(), reservedWords.end(), parseWord) != reservedWords.end()) {
-                                    token newToken{parseWord, typeMap[parseWord]};
-                                    tokens.push_back(newToken);
-                                    prev2Token = prevToken;
-                                    prevToken = newToken;
-                                    parseWord.clear();
-
-                                    if (prevToken.getToken() == "\"") {
-                                        openQuote = true;
-                                        break;
-                                    }
-                                }
-
-                                else if (variableTokens.find(parseWord) != variableTokens.end()) {
-                                    token newToken{parseWord, token::IDENTIFIER};
-                                    tokens.push_back(newToken);
-                                    prev2Token = prevToken;
-                                    prevToken = newToken;
-                                    parseWord.clear();
-                                }
-
-                            }
-                            if (!parseWord.empty()) {
-                                std::cerr << "Unexpected token \"" << parseWord << "\" on line " << lineNum << std::endl;
-                            }
-                        }
-                   // }
-                }
-            }
-        }
-    }
-
-    else {
-        std::cerr << "tokenize() was unable to open file" << std::endl;
-    }
-}
-
-void tokenizer::processWord(std::string &prevWord, std::string &word, std::string &nextWord) {
-
-}
-
 void tokenizer::testPopulateTokens() {
     for (int i = 0; i < 20; i++) {
         token newToken;
         tokens.push_back(newToken);
     }
 }
+
 void tokenizer::printTokens() {
     std::cout << "\nToken list:" << std::endl;
     for(auto token : tokens) {
@@ -663,3 +161,219 @@ bool tokenizer::isNumber(const std::string& str) {
     return true;
 }
 
+bool tokenizer::tokener() {
+    std::string line;
+    token prevToken;
+    token prev2Token;
+    int lineNum = 0;
+    bool inString = false;
+    bool startQuote = false;
+    bool wasIdentifier = false;
+    std::string inQuotes;
+
+    parseFile->open("comments_removed.txt", std::ios::in);
+    if (parseFile->is_open()) {
+        std::string line;
+        char c;
+
+        while (std::getline(*parseFile, line)) {
+            std::istringstream iss(line);
+            lineNum++;
+            std::string word = "";
+
+            //begin checking for tokens
+            while(iss.get(c)) {
+                //look ahead at the next character
+                char nextChar = iss.peek();
+
+                if (prevToken.getTokenType() == token::IDENTIFIER || prevToken.getTokenType() == token::COMMA) {
+                    wasIdentifier = true;
+                }
+
+                else {
+                    wasIdentifier = false;
+                }
+
+                //if we hit whitespace
+                if (c == ' ') {
+                    //do we have a non-empty word?
+                    if (!word.empty()) {
+                        //check if we're declaring a variable
+                        if (wasIdentifier) {
+                            token newToken{word, token::IDENTIFIER};
+                            tokens.push_back(newToken);
+                            variableTokens.emplace(word, "var");
+                            prevToken = newToken;
+                            word.clear();
+                        }
+
+                        else {
+                            //if a token was not found, flush the invalid token
+                            std::cerr << "Unable to find token: " << word << " on line: " << lineNum << std::endl;
+                            word.clear();
+                        }
+                    }
+                }
+
+                //parse line
+                else {
+                    //build words
+                    word += c;
+
+                    //check if we're seeing a number
+                    if (word[0] == '-' || isdigit(word[0])) {
+                        if (checkNum(iss, prevToken, c)) {
+                            word.clear();
+                            continue;
+                        }
+                    }
+
+                    //check if we're reading a character
+                    if (c == '\'') {
+                        checkChar(iss, prevToken, c);
+                        word.clear();
+                        continue;
+                    }
+
+                    //check for boolean ops
+                    if (word == "<" || word == ">" || word == "=") {
+                        if (nextChar == '=') {
+                            iss.get(c);
+                            nextChar = iss.peek();
+                            word += c;
+                        }
+                    }
+
+                    //check if word is in our reserved list, if so add it to the token list
+                    if (std::find(reservedWords.begin(), reservedWords.end(), word) != reservedWords.end()) {
+                        token newToken{word, typeMap[word]};
+                        tokens.push_back(newToken);
+                        prevToken = newToken;
+                        word.clear();
+                    }
+
+                    //is the word one of our variables?
+                    else if (variableTokens.find(word) != variableTokens.end() && (nextChar == ' ' || nextChar == '[' || nextChar == ';' || nextChar == ')' || nextChar == ']' || nextChar ==',')) {
+                        token newToken{word, token::IDENTIFIER};
+                        tokens.push_back(newToken);
+                        prevToken = newToken;
+                        word.clear();
+                        continue;
+                    }
+                }
+
+                //are we about to go into a string?
+                if (nextChar == '"') {
+                    processString(iss, prevToken);
+                }
+
+                //are we declaring a variable
+                if (wasIdentifier) {
+                    if ((nextChar == ')' || nextChar == ';' || nextChar == '[' || nextChar == ',') && (c != ';' && c != ')' && c != ']')) {
+                        token newToken{word, token::IDENTIFIER};
+                        tokens.push_back(newToken);
+                        variableTokens.emplace(word, "var");
+                        prevToken = newToken;
+                        word.clear();
+                    }
+                }
+            }
+            //test printing
+            //std::cout << word << std::endl;
+        }
+    }
+    return true;
+}
+
+void tokenizer::processString(std::istringstream &iss, token &prevToken) {
+    char openQuote;
+    char c;
+
+    std::string inQuotes;
+
+    iss.get(openQuote);
+
+    if (openQuote != '"') {
+        std::cerr << "Expected token '\"', saw token '" << openQuote << "'" << std::endl;
+        return;
+    }
+
+    while (iss.get(c)) {
+        if (c == '"') {
+            char closeQuote = '"';
+            break;
+        }
+        inQuotes += c;
+    }
+    token newToken{"\"", token::DOUBLE_QUOTE};
+    tokens.push_back(newToken);
+    token newToken2{inQuotes, token::STRING};
+    tokens.push_back(newToken2);
+    token newToken3{"\"", token::DOUBLE_QUOTE};
+    tokens.push_back(newToken3);
+    prevToken = newToken3;
+}
+
+
+bool tokenizer::checkNum(std::istringstream &iss, token &prevToken, char c) {
+    if (c != '-' && !isdigit(c)) {
+        std::cerr << "checkNum called on invalid input" << std::endl;
+        return false;
+    }
+
+    //we hit a minus, not a negative
+    if (c == '-' && !isdigit(iss.peek())) {
+        return false;
+    }
+
+    std::string number;
+    number += c;
+    char nextChar;
+
+    while (isdigit(iss.peek())) {
+        iss.get(nextChar);
+        number += nextChar;
+    }
+
+    token newToken{number, token::INTEGER};
+    tokens.push_back(newToken);
+
+    return true;
+}
+
+
+bool tokenizer::checkChar(std::istringstream &iss, token &prevToken, char c) {
+    char openQuote = c;
+    char inChar;
+    bool escape = false;
+
+    if (openQuote != '\'') {
+        std::cerr << "checkChar called on invalid input" << std::endl;
+        return false;
+    }
+
+    if (iss.peek() == '\\') {
+        escape = true;
+        iss.get(inChar);
+    }
+
+    iss.get(inChar);
+    std::string outChar;
+    if (escape) {
+        outChar += '\\';
+    }
+    outChar += inChar;
+    //grab last "'"
+    iss.get(inChar);
+
+
+    token newToken{"'", token::SINGLE_QUOTE};
+    tokens.push_back(newToken);
+    token newToken2{outChar, token::STRING};
+    tokens.push_back(newToken2);
+    token newToken3{"'", token::SINGLE_QUOTE};
+    tokens.push_back(newToken3);
+    prevToken = newToken3;
+
+    return true;
+}
